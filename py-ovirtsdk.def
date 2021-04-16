@@ -1,7 +1,16 @@
 Bootstrap: yum
 OSVersion:8
-MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/BaseOS/$basearch/os/
+MirrorURL: http://mirrors.gigenet.com/almalinux/%{OSVERSION}/BaseOS/$basearch/os/
+#MirrorURL: http://mirror.siena.edu/almalinux/%{OSVERSION}/BaseOS/$basearch/os/
+#MirrorURL: http://yum.tamu.edu/almalinux/%{OSVERSION}/BaseOS/$basearch/os/
+#MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/BaseOS/$basearch/os/
 Include: yum
+
+# oVirt Python SDK in a Singularity Container
+# Author: Aronnax, Miles V. [LAS] <rassilon@iastate.edu>
+#
+# To build: sudo singularity build py-ovirtsdk.sif py-ovirtsdk.def
+# To use: 'singularity run py-ovirtsdk.sif bash' or 'singularity shell py-ovirtsdk.sif'
 
 %setup
 
@@ -12,7 +21,7 @@ Include: yum
 %post
   yum update -y
   yum install -y http://resources.ovirt.org/pub/yum-repo/ovirt-release44.rpm
-  yum install -y gcc libxml2-devel python3-devel python3-ovirt-engine-sdk4 nmap nmap-ncat tcpdump
+  yum install -y gcc libxml2-devel python3-devel python3-ovirt-engine-sdk4 python3-pyyaml python3-pycurl nmap nmap-ncat tcpdump
 
 %runscript
   cat /etc/redhat-release
